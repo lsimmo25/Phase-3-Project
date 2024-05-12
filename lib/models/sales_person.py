@@ -4,7 +4,7 @@ class Sales_person:
     
     all = {}
 
-    approved_titles = ["sales_person", "sales_manager", "finance_manager"]
+    approved_titles = ["Sales Person", "Sales Manager", "Finance Manager"]
 
     def __init__(self, name, title, id=None):
         self.name = name
@@ -32,7 +32,7 @@ class Sales_person:
     @title.setter
     def title(self, value):
         if isinstance(value, str) and value in Sales_person.approved_titles:
-            self._name = value
+            self._title = value
         else:
             raise ValueError("Name must be a string in list of approved titles")
     
@@ -42,7 +42,7 @@ class Sales_person:
             CREATE TABLE IF NOT EXISTS sales_people
             (
             id INTEGER PRIMARY KEY,
-            name TEXT
+            name TEXT,
             title TEXT
             )    
         """
@@ -115,6 +115,16 @@ class Sales_person:
 
         rows = CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
+    
+    @classmethod
+    def find_by_id(cls, id):
+        sql = """
+            SELECT *
+            FROM sales_people
+            WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id, )).fetchone()
+        return cls.instance_from_db if row else None
     
     @classmethod
     def find_by_name(cls, name):

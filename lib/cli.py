@@ -2,7 +2,13 @@
 
 from helpers import (
     exit_program,
-    list_all_sales_people
+    list_all_sales_people,
+    find_sales_person_by_name,
+    find_sales_person_by_id,
+    create_sales_person,
+    update_sales_person,
+    delete_sales_person
+
 )
 
 
@@ -14,6 +20,16 @@ def main():
             exit_program()
         elif choice == "1":
             list_all_sales_people()
+        elif choice == "2":
+            find_sales_person_by_name()  
+        elif choice == "3":
+            find_sales_person_by_id() 
+        elif choice == "4":
+            create_sales_person() 
+        elif choice == "5":
+            update_sales_person() 
+        elif choice == "6":
+            delete_sales_person()
         else:
             print("Invalid choice")
 

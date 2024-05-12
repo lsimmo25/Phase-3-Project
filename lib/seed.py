@@ -3,4 +3,11 @@ from models.sales_person import Sales_person
 from models.customer import Customer
 
 def seed_database():
-    pass
+    Sales_person.drop_table()
+    Sales_person.create_table()
+
+    jim = Sales_person.create("Jim Halpert", "Sales Person")
+
+
+seed_database()
+print("Seeded database")
