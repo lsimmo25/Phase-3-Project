@@ -123,8 +123,8 @@ class Sales_person:
             FROM sales_people
             WHERE id = ?
         """
-        row = CURSOR.execute(sql, (id, )).fetchone()
-        return cls.instance_from_db if row else None
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
     
     @classmethod
     def find_by_name(cls, name):
