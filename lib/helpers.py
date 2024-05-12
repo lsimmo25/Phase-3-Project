@@ -18,7 +18,13 @@ def find_sales_person_by_id():
     print(sales_person) if sales_person else print(f"Sales Person ID not found")
 
 def create_sales_person():
-    pass
+    name = input("Enter the sales person's name: ")
+    title = input("Enter the sales person's title: ")
+    try:
+        sales_person = Sales_person.create(name, title)
+        print(f"Success: {sales_person}")
+    except Exception as exc:
+        print("Error creating sales person: ", exc)
 
 def update_sales_person():
     pass

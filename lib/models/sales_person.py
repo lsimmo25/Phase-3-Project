@@ -135,7 +135,7 @@ class Sales_person:
         """
 
         row = CURSOR.execute(sql, (name,)).fetchone()
-        return cls.instance_from_db(row) if row else None #test
+        return cls.instance_from_db(row) if row else None
     
     def customers(self):
         from models.customer import Customer
