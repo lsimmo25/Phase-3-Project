@@ -1,35 +1,35 @@
 # lib/helpers.py
-from models.sales_person import Sales_person
+from models.employee import Employee
 from models.customer import Customer
 
-def list_all_sales_people():
-    sales_people = Sales_person.get_all()
-    for sales_person in sales_people:
-        print(sales_person)
+def list_all_employee():
+    employees = Employee.get_all()
+    for employee in employees:
+        print(employee)
 
-def find_sales_person_by_name():
-    name = input("Enter a sales person's name: ")
-    sales_person = Sales_person.find_by_name(name)
-    print(sales_person) if sales_person else print(f"No sales people found for that name")
+def find_employee_by_name():
+    name = input("Enter a employee's name: ")
+    employee = Employee.find_by_name(name)
+    print(employee) if employee else print(f"No employee's found for that name")
 
-def find_sales_person_by_id():
-    id_ = input("Enter a sales person's ID: ")
-    sales_person = Sales_person.find_by_id(id_)
-    print(sales_person) if sales_person else print(f"Sales Person ID not found")
+def find_employee_by_id():
+    id_ = input("Enter a employee's ID: ")
+    employee = Employee.find_by_id(id_)
+    print(employee) if employee else print(f"Employee ID not found")
 
-def create_sales_person():
-    name = input("Enter the sales person's name: ")
-    title = input("Enter the sales person's title: ")
+def create_employee():
+    name = input("Enter the employee's name: ")
+    title = input("Enter the employee's title: ")
     try:
-        sales_person = Sales_person.create(name, title)
-        print(f"Success: {sales_person}")
+        employee = Employee.create(name, title)
+        print(f"Success: {employee}")
     except Exception as exc:
-        print("Error creating sales person: ", exc)
+        print("Error creating employee: ", exc)
 
-def update_sales_person():
+def update_employee():
     pass
 
-def delete_sales_person():
+def delete_employee():
     pass
 
 

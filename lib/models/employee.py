@@ -1,6 +1,6 @@
 from models.__init__ import CURSOR, CONN   
 
-class Sales_person:
+class Employee:
     
     all = {}
 
@@ -12,7 +12,7 @@ class Sales_person:
         self.title = title
     
     def __repr__(self):
-        return f"<SalesPerson {self.id}: {self.name}, {self.title}"
+        return f"<Employee {self.id}: {self.name}, {self.title}"
     
     @property
     def name(self):
@@ -31,7 +31,7 @@ class Sales_person:
     
     @title.setter
     def title(self, value):
-        if isinstance(value, str) and value in Sales_person.approved_titles:
+        if isinstance(value, str) and value in Employee.approved_titles:
             self._title = value
         else:
             raise ValueError("Name must be a string in list of approved titles")
@@ -39,7 +39,7 @@ class Sales_person:
     @classmethod
     def create_table(cls):
         sql = """
-            CREATE TABLE IF NOT EXISTS sales_people
+            CREATE TABLE IF NOT EXISTS employees
             (
             id INTEGER PRIMARY KEY,
             name TEXT,
@@ -52,14 +52,14 @@ class Sales_person:
     @classmethod
     def drop_table(cls):
         sql = """
-            DROP TABLE IF EXISTS sales_people
+            DROP TABLE IF EXISTS employees
         """
         CONN.execute(sql)
         CONN.commit()
     
     def save(self):
         sql = """
-            INSERT INTO sales_people (name, title)
+            INSERT INTO employees (name, title)
             VALUES (?, ?)
         """
         CURSOR.execute(sql, (self.name, self.title))
@@ -70,13 +70,13 @@ class Sales_person:
     
     @classmethod
     def create(cls, name, title):
-        sales_person = cls(name, title)
-        sales_person.save()
-        return sales_person
+        employee = cls(name, title)
+        employee.save()
+        return employee
     
     def update(self):
         sql = """
-            UPDATE sales_people
+            UPDATE employees
             SET name = ?, title = ?
             WHERE id = ?
         """
@@ -85,7 +85,7 @@ class Sales_person:
     
     def delete(self):
         sql = """
-            DELETE FROM sales_people
+            DELETE FROM employees
             WHERE id = ?
         """
         CURSOR.execute(sql, (self.id,))
@@ -96,21 +96,21 @@ class Sales_person:
     
     @classmethod
     def instance_from_db(cls, row):
-        sales_person = cls.all.get(row[0])
-        if sales_person:
-            sales_person.name = row[1]
-            sales_person.title = row[2]
+        employee = cls.all.get(row[0])
+        if employee:
+            employee.name = row[1]
+            employee.title = row[2]
         else:
-            sales_person = cls(row[1], row[2])
-            sales_person.id = row[0]
-            cls.all[sales_person.id] = sales_person
-        return sales_person
+            employee = cls(row[1], row[2])
+            employee.id = row[0]
+            cls.all[employee.id] = employee
+        return employee
     
     @classmethod
     def get_all(cls):
         sql = """
             SELECT *
-            FROM sales_people
+            FROM employees
         """
 
         rows = CURSOR.execute(sql).fetchall()
@@ -120,7 +120,7 @@ class Sales_person:
     def find_by_id(cls, id):
         sql = """
             SELECT *
-            FROM sales_people
+            FROM employees
             WHERE id = ?
         """
         row = CURSOR.execute(sql, (id,)).fetchone()
@@ -130,7 +130,7 @@ class Sales_person:
     def find_by_name(cls, name):
         sql = """
             SELECT *
-            FROM sales_people
+            FROM employees
             WHERE name is ?
         """
 
