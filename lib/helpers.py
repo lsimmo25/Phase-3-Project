@@ -68,10 +68,21 @@ def create_customer():
     name = input("Enter the customer's name: ")
     stock_number = input("Enter the customer's stock number: ")
     try:
-        customer = Customer.create(name, stock_number)
-        print(f'Success: {customer}')
-    except Exception as exc:
-        print("Error creating customer: ", exc)  
+        employee_id = int(input("Enter the employee_id for the employee the customer belongs to:  "))
+    except ValueError:
+        print("Employee ID must be a valid integer.")
+        return
+
+    employee = Employee.find_by_id(employee_id)
+
+    if employee:
+        try:
+            customer = Customer.create(name, stock_number, employee_id)
+            print(f'Success: {customer}')
+        except Exception as exc:
+            print("Error creating customer: ", exc)
+    else:
+        print(f"Employee with ID {employee_id} not found.")
 
 def update_customer():
     id_ = input("Enter the customer's id: ")
