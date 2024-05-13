@@ -90,7 +90,12 @@ def update_customer():
         print(f'customer {id_} not found')
 
 def delete_customer():
-    pass
+    id_ = input("Enter the customer's id: ")
+    if customer := Customer.find_by_id(id_):
+        customer.delete()
+        print(f'Customer {id_} deleted')
+    else:
+        print(f'Customer {id_} not found')
 
 def all_customers_belonging_to_an_employee():
     pass
