@@ -38,7 +38,7 @@ This Python program is a simple management system for employees and customers. I
 
 Contributions are welcome! If you find any bugs or have suggestions for improvements, please let me know!
 
-##Author
+## Author
 
 Lyle Simmons
 
