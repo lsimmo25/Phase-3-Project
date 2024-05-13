@@ -7,7 +7,14 @@ from helpers import (
     find_employee_by_id,
     create_employee,
     update_employee,
-    delete_employee
+    delete_employee,
+    list_all_customers,
+    find_customer_by_name,
+    find_customer_by_id,
+    create_customer,
+    update_customer,
+    delete_customer,
+    all_customers_belonging_to_an_employee
 
 )
 
@@ -30,6 +37,20 @@ def main():
             update_employee() 
         elif choice == "6":
             delete_employee()
+        elif choice == "7":
+            list_all_customers()
+        elif choice == "8":
+            find_customer_by_name()
+        elif choice == "9":
+            find_customer_by_id()
+        elif choice == "10":
+            create_customer()
+        elif choice == "11":
+            update_customer()
+        elif choice == "12":
+            delete_customer()
+        elif choice == "13":
+            all_customers_belonging_to_an_employee()
         else:
             print("Invalid choice")
 

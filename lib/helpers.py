@@ -47,7 +47,28 @@ def delete_employee():
         employee.delete()
         print(f'Employee {id_} deleted')
     else:
-        print(f'Employee {id_} not found')    
+        print(f'Employee {id_} not found')
+
+def list_all_customers():
+    pass
+
+def find_customer_by_name():
+    pass
+
+def find_customer_by_id():
+    pass
+
+def create_customer():
+    pass
+
+def update_customer():
+    pass
+
+def delete_customer():
+    pass
+
+def all_customers_belonging_to_an_employee():
+    pass
 
 def exit_program():
     print("Goodbye!")
