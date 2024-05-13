@@ -74,7 +74,20 @@ def create_customer():
         print("Error creating customer: ", exc)  
 
 def update_customer():
-    pass
+    id_ = input("Enter the customer's id: ")
+    if customer := Customer.find_by_id(id_):
+        try:
+            name = input("Enter the customer's new name: ")
+            customer.name = name
+            stock_number = input("Enter the customer's new stock number: ")
+            customer.stock_number = stock_number
+
+            customer.update()
+            print(f'Success: {customer}')
+        except Exception as exc:
+            print("Error updating customer: ", exc)
+    else:
+        print(f'customer {id_} not found')
 
 def delete_customer():
     pass
