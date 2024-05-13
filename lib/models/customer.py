@@ -126,7 +126,7 @@ class Customer:
             FROM customers
             WHERE id = ?
         """
-        row = CURSOR.execute(sql).fetchone()
+        row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
     
     @classmethod
