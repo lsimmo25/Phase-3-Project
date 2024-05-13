@@ -40,7 +40,7 @@ class Customer:
 
     @property
     def employee_id(self):
-        return self.employee_id
+        return self._employee_id
 
     @employee_id.setter
     def employee_id(self, employee_id):
@@ -51,12 +51,13 @@ class Customer:
 
     @classmethod
     def create_table(cls):
-        sql="""
-            CREATE TABLE IF NOT EXSISTS customers (
-            id INTEGER PRIMARY KEY,
-            name TEXT,
-            stock_number, TEXT
-            FOREIGN KEY (employee_id) REFERENCES employees(id)
+        sql = """
+            CREATE TABLE IF NOT EXISTS customers (
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                stock_number TEXT,
+                employee_id INTEGER,
+                FOREIGN KEY (employee_id) REFERENCES employees(id)
             )
         """
         CURSOR.execute(sql)
@@ -72,7 +73,7 @@ class Customer:
     
     def save(self):
         sql = """
-            INSERT INTO employees (name, job_title, department_id)
+            INSERT INTO customers (name, stock_number, employee_id)
             VALUES (?, ?, ?)
         """
         CURSOR.execute(sql, (self.name, self.stock_number, self.employee_id))
@@ -133,7 +134,7 @@ class Customer:
         sql = """
             SELECT *
             FROM customers
-            WHERE name is ?
+            WHERE name = ?
         """
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None

@@ -9,13 +9,13 @@ def seed_database():
     Customer.create_table()
 
     jim = Employee.create("Jim Halpert", "Sales Person")
-    dwight = Employee.create("Dwight Schrute", "Finance Person")
+    dwight = Employee.create("Dwight Schrute", "Finance Manager")
     michael = Employee.create("Michael Scott", "Sales Manager")
 
-    ron = Customer.create("Ron Swanson", "P001", michael.id)
-    april = Customer.create("April Ludgate", "P002", michael.id)
-    leslie = Customer.create("Leslie Knope", "P003", jim.id)
-    andy = Customer.create("Andy Dwyer", "P004", dwight.id)
+    Customer.create("Ron Swanson", "P001", michael.id)
+    Customer.create("April Ludgate", "P002", michael.id)
+    Customer.create("Leslie Knope", "P003", jim.id)
+    Customer.create("Andy Dwyer", "P004", dwight.id)
 
 
 seed_database()
