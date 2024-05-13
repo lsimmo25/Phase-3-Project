@@ -81,8 +81,18 @@ class Customer:
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
-
+    
     def update(self):
+        sql = """
+            UPDATE customers
+            SET name = ?, stock_number = ?, employee_id = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.name, self.stock_number, self.employee_id, self.id))
+        CONN.commit()
+
+
+    def delete(self):
         sql = """
             DELETE FROM customers
             WHERE id = ?
