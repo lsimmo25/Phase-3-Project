@@ -12,8 +12,8 @@ class Customer:
 
     def __repr__(self) -> str:
         return (
-        f"<Customer {self.id}: {self.name}, {self.stock_number}"
-        f"Employee ID: {self.employee_id}>"
+        f"<Customer {self.id}: {self.name}, {self.stock_number} --"
+        f" Employee ID: {self.employee_id}>"
         )
     
     @property
