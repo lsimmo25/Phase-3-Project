@@ -48,5 +48,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgements
 
-ASCII Car Text Art - https://www.asciiart.eu/vehicles/cars
-ASCII Dealership Database Text Art - https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+- **ASCII Car Text Art:** https://www.asciiart.eu/vehicles/cars
+- **ASCII Dealership Database Text Art:** https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
