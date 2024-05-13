@@ -117,3 +117,23 @@ class Customer:
         """
         rows = CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
+    
+    @classmethod
+    def find_by_id(cls, id):
+        sql = """
+            SELECT *
+            FROM customers
+            WHERE id = ?
+        """
+        row = CURSOR.execute(sql).fetchone()
+        return cls.instance_from_db(row) if row else None
+    
+    @classmethod
+    def find_by_name(cls, name):
+        sql = """
+            SELECT *
+            FROM customers
+            WHERE name is ?
+        """
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return cls.instance_from_db(row) if row else None
