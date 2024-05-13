@@ -42,8 +42,12 @@ def update_employee():
         print(f"Employee {id_} not found")
 
 def delete_employee():
-    pass
-
+    id_ = input("Enter an employee's ID: ")
+    if employee := Employee.find_by_id(id_):
+        employee.delete()
+        print(f'Employee {id_} deleted')
+    else:
+        print(f'Employee {id_} not found')    
 
 def exit_program():
     print("Goodbye!")
