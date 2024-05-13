@@ -1,4 +1,4 @@
-from models.__init__ import CURSOR, CONN   
+from models.__init__ import CURSOR, CONN
 
 class Employee:
     
@@ -138,10 +138,10 @@ class Employee:
         return cls.instance_from_db(row) if row else None
     
     def customers(self):
-        from models.customer import Customer
+        from models.customer import Customer 
         sql = """
-            SELECT * FROM employees
-            WHERE department_id = ?
+            SELECT * FROM customers
+            WHERE employee_id = ?
         """
         CURSOR.execute(sql, (self.id,),)
 

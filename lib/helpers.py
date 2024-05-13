@@ -111,13 +111,16 @@ def delete_customer():
 def all_customers_belonging_to_an_employee():
     employee_id = input("Enter the employee's id: ")
     employee = Employee.find_by_id(employee_id)
-    customers = Customer.find_by_id(employee_id)
-    if customers:
-        print(f"{employee.name}'s customer's:")
-        for customer in customers:
-            print(customer)
+    if employee:
+        customers = employee.customers()
+        if customers:
+            print(f"{employee.name}'s customers:")
+            for customer in customers:
+                print(customer)
+        else:
+            print(f"{employee.name} has no active customers")
     else:
-        print(f'{employee} has no active customers')
+        print(f'Employee with ID {employee_id} not found')
 
 def exit_program():
     print("Goodbye!")
