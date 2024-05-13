@@ -50,16 +50,28 @@ def delete_employee():
         print(f'Employee {id_} not found')
 
 def list_all_customers():
-    pass
+    customers = Customer.get_all()
+    for customer in customers:
+        print(customer)
 
 def find_customer_by_name():
-    pass
+    name = input("Enter a Customer's name: ")
+    customer = Customer.find_by_name(name)
+    print(customer) if customer else print(f"No customer's found for that name")
 
 def find_customer_by_id():
-    pass
+    id_ = input("Enter a customer's ID: ")
+    customer = Customer.find_by_id(id_)
+    print(customer) if customer else print(f"Customer ID not found")
 
 def create_customer():
-    pass
+    name = input("Enter the customer's name: ")
+    stock_number = input("Enter the customer's stock number: ")
+    try:
+        customer = Customer.create(name, stock_number)
+        print(f'Success: {customer}')
+    except Exception as exc:
+        print("Error creating customer: ", exc)  
 
 def update_customer():
     pass
