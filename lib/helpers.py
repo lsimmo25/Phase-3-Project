@@ -122,6 +122,12 @@ def all_customers_belonging_to_an_employee():
     else:
         print(f'Employee with ID {employee_id} not found')
 
+def find_employee_by_name():
+    name = input("Enter a title: ")
+    employee = Employee.find_by_name(name)
+    print(employee) if employee else print(f"No employee's found for that name")
+
+
 def exit_program():
     print("Goodbye!")
     exit()

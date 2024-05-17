@@ -21,7 +21,7 @@ class Customer:
         return self._name
     
     @name.setter
-    def name(self, value):
+    def name(self, value: str):
         if isinstance(value, str) and len(value):
             self._name = value
         else:
@@ -32,7 +32,7 @@ class Customer:
         return self._stock_number
     
     @stock_number.setter
-    def stock_number(self, value):
+    def stock_number(self, value: str):
         if isinstance(value, str) and len(value) > 0:
             self._stock_number = value
         else:
@@ -43,7 +43,7 @@ class Customer:
         return self._employee_id
 
     @employee_id.setter
-    def employee_id(self, employee_id):
+    def employee_id(self, employee_id: int):
         if type(employee_id) is int and Employee.find_by_id(employee_id):
             self._employee_id = employee_id
         else:
@@ -102,7 +102,7 @@ class Customer:
         del type(self).all[self.id]
     
     @classmethod
-    def create(cls, name, stock_number, employee_id):
+    def create(cls, name: str, stock_number: str, employee_id: int):
         customer = cls(name, stock_number, employee_id)
         customer.save()
         return customer
@@ -140,7 +140,7 @@ class Customer:
         return cls.instance_from_db(row) if row else None
     
     @classmethod
-    def find_by_name(cls, name):
+    def find_by_name(cls, name: str):
         sql = """
             SELECT *
             FROM customers

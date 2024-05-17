@@ -6,7 +6,7 @@ class Employee:
 
     approved_titles = ["Sales Person", "Sales Manager", "Finance Manager"]
 
-    def __init__(self, name, title, id=None):
+    def __init__(self, name: str, title: str, id=None):
         self.name = name
         self.id = id
         self.title = title
@@ -19,7 +19,7 @@ class Employee:
         return self._name
     
     @name.setter
-    def name(self, value):
+    def name(self, value: str):
         if isinstance(value, str) and len(value) > 0:
             self._name = value
         else:
@@ -30,7 +30,7 @@ class Employee:
         return self._title
     
     @title.setter
-    def title(self, value):
+    def title(self, value: str):
         if isinstance(value, str) and value in Employee.approved_titles:
             self._title = value
         else:
@@ -69,7 +69,7 @@ class Employee:
         type(self).all[self.id] = self
     
     @classmethod
-    def create(cls, name, title):
+    def create(cls, name: str, title: str):
         employee = cls(name, title)
         employee.save()
         return employee
@@ -117,7 +117,7 @@ class Employee:
         return [cls.instance_from_db(row) for row in rows]
     
     @classmethod
-    def find_by_id(cls, id):
+    def find_by_id(cls, id: int):
         sql = """
             SELECT *
             FROM employees
@@ -127,7 +127,7 @@ class Employee:
         return cls.instance_from_db(row) if row else None
     
     @classmethod
-    def find_by_name(cls, name):
+    def find_by_name(cls, name: str):
         sql = """
             SELECT *
             FROM employees
