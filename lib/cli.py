@@ -1,11 +1,9 @@
-# lib/cli.py
-
 from helpers import (
     exit_program,
     list_all_employees,
-    select_employee
+    select_employee,
+    create_employee
 )
-
 
 def main():
     while True:
@@ -13,13 +11,14 @@ def main():
         choice = input("> ")
         if choice == "0":
             exit_program()
-        elif choice == "1": 
+        elif choice == "1":
             list_all_employees()
         elif choice == "2":
             select_employee()
+        elif choice == "3":
+            create_employee()
         else:
             print("Invalid choice")
-
 
 def menu():
     print(r"""
@@ -43,6 +42,7 @@ def menu():
     print("0. Exit the program")
     print("1. List all Employees")
     print("2. Select an Employee")
+    print("3. Create Employee")
 
 if __name__ == "__main__":
     main()

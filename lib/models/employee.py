@@ -31,7 +31,7 @@ class Employee:
         if isinstance(value, str) and value in Employee.approved_titles:
             self._title = value
         else:
-            raise ValueError("Name must be a string in list of approved titles")
+            raise ValueError("Title must be a string in the list of approved titles")
     
     @classmethod
     def create_table(cls):
@@ -71,7 +71,9 @@ class Employee:
         employee.save()
         return employee
     
-    def update(self):
+    def update(self, new_name: str, new_title: str):
+        self.name = new_name
+        self.title = new_title
         sql = """
             UPDATE employees
             SET name = ?, title = ?
@@ -109,7 +111,6 @@ class Employee:
             SELECT *
             FROM employees
         """
-
         rows = CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
     
@@ -128,20 +129,18 @@ class Employee:
         sql = """
             SELECT *
             FROM employees
-            WHERE name is ?
+            WHERE name = ?
         """
-
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
     
     @classmethod
-    def find_by_name(cls, title: str):
+    def find_by_title(cls, title: str):
         sql = """
             SELECT *
             FROM employees
-            WHERE title is ?
+            WHERE title = ?
         """
-
         row = CURSOR.execute(sql, (title,)).fetchone()
         return cls.instance_from_db(row) if row else None
     
@@ -152,8 +151,7 @@ class Employee:
             WHERE employee_id = ?
         """
         CURSOR.execute(sql, (self.id,),)
-
         rows = CURSOR.fetchall()
         return [
             Customer.instance_from_db(row) for row in rows
-        ]       
+        ]

@@ -1,5 +1,3 @@
-# lib/helpers.py
-
 from models.employee import Employee
 
 def list_all_employees():
@@ -37,6 +35,8 @@ def employee_menu(employee):
         print("0. Back to Main Menu")
         print("1. View Employee Details")
         print("2. View Employee's Customers")
+        print("3. Update Employee")
+        print("4. Delete Employee")
         choice = input("> ")
         if choice == "0":
             break
@@ -44,6 +44,11 @@ def employee_menu(employee):
             view_employee_details(employee)
         elif choice == "2":
             view_employee_customers(employee)
+        elif choice == "3":
+            update_employee(employee)
+        elif choice == "4":
+            delete_employee(employee)
+            break  # Return to main menu after deleting employee
         else:
             print("Invalid choice")
 
@@ -65,6 +70,53 @@ def view_employee_customers(employee):
     else:
         print(f"{employee.name} has no active customers")
 
+def create_employee():
+    name = input("Enter the employee's name: ")
+    title = input("Enter the employee's title: ")
+    try:
+        employee = Employee.create(name, title)
+        print(f"Success: Employee {employee.name} created.")
+    except Exception as exc:
+        print("Error creating employee: ", exc)
+
+def update_employee(employee=None):
+    if not employee:
+        try:
+            id_ = int(input("Enter the employee's ID: "))
+        except ValueError:
+            print("Employee ID must be a valid integer.")
+            return
+
+        if employee := Employee.find_by_id(id_):
+            pass
+        else:
+            print(f"Employee with ID {id_} not found.")
+            return
+
+    try:
+        new_name = input(f"Enter the employee's new name (current: {employee.name}): ")
+        new_title = input(f"Enter the employee's new title (current: {employee.title}): ")
+        employee.update(new_name, new_title)
+        print(f"Success: Employee {employee.name} updated.")
+    except Exception as exc:
+        print("Error updating employee: ", exc)
+
+def delete_employee(employee=None):
+    if not employee:
+        try:
+            id_ = int(input("Enter the employee's ID: "))
+        except ValueError:
+            print("Employee ID must be a valid integer.")
+            return
+
+        if employee := Employee.find_by_id(id_):
+            pass
+        else:
+            print(f"Employee with ID {id_} not found.")
+            return
+
+    employee.delete()
+    print(f'Employee {employee.name} deleted')
 
 def exit_program():
     print("Goodbye!")
