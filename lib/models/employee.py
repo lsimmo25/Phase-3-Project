@@ -71,9 +71,9 @@ class Employee:
         employee.save()
         return employee
     
-    def update(self, new_name: str, new_title: str):
-        self.name = new_name
-        self.title = new_title
+    def update(self, name=None, title=None):
+        self.name = name if name else self.name
+        self.title = title if title else self.title
         sql = """
             UPDATE employees
             SET name = ?, title = ?
@@ -111,6 +111,7 @@ class Employee:
             SELECT *
             FROM employees
         """
+
         rows = CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
     
@@ -134,24 +135,11 @@ class Employee:
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
     
-    @classmethod
-    def find_by_title(cls, title: str):
-        sql = """
-            SELECT *
-            FROM employees
-            WHERE title = ?
-        """
-        row = CURSOR.execute(sql, (title,)).fetchone()
-        return cls.instance_from_db(row) if row else None
-    
     def customers(self):
-        from models.customer import Customer 
+        from models.customer import Customer  # Deferred import
         sql = """
             SELECT * FROM customers
             WHERE employee_id = ?
         """
-        CURSOR.execute(sql, (self.id,),)
-        rows = CURSOR.fetchall()
-        return [
-            Customer.instance_from_db(row) for row in rows
-        ]
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        return [Customer.instance_from_db(row) for row in rows]

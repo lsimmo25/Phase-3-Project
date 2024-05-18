@@ -1,4 +1,5 @@
 from models.employee import Employee
+from models.customer import Customer
 
 def list_all_employees():
     employees = Employee.get_all()
@@ -13,7 +14,7 @@ def select_employee():
     print("\nSelect an Employee:")
     print("-" * 40)
     for idx, employee in enumerate(employees, start=1):
-        print(f"{idx}. *{employee.name}*, Title: {employee.title}")
+        print(f"{idx}. {employee.name}, Title: {employee.title}")
     print("-" * 40)
     
     choice = input("Enter the number of the employee: ")
@@ -29,14 +30,17 @@ def select_employee():
 
 def employee_menu(employee):
     while True:
-        print(f"\nEmployee: *{employee.name}*")
+        print(f"\nEmployee: {employee.name}")
         print("-" * 40)
         print("Employee Menu:")
         print("0. Back to Main Menu")
         print("1. View Employee Details")
         print("2. View Employee's Customers")
-        print("3. Update Employee")
-        print("4. Delete Employee")
+        print("3. Create Customer for Employee")
+        print("4. Update Employee Details")
+        print("5. Delete Employee")
+        print("6. Update Customer")
+        print("7. Delete Customer")
         choice = input("> ")
         if choice == "0":
             break
@@ -45,10 +49,16 @@ def employee_menu(employee):
         elif choice == "2":
             view_employee_customers(employee)
         elif choice == "3":
-            update_employee(employee)
+            create_customer(employee)
         elif choice == "4":
+            update_employee(employee)
+        elif choice == "5":
             delete_employee(employee)
             break  # Return to main menu after deleting employee
+        elif choice == "6":
+            update_customer(employee)
+        elif choice == "7":
+            delete_customer(employee)
         else:
             print("Invalid choice")
 
@@ -69,6 +79,67 @@ def view_employee_customers(employee):
         print("-" * 40)
     else:
         print(f"{employee.name} has no active customers")
+
+def create_customer(employee):
+    name = input("Enter the customer's name: ")
+    stock_number = input("Enter the customer's stock number: ")
+    try:
+        customer = Customer.create(name, stock_number, employee.id)
+        print(f"Success: Customer {customer.name} created and assigned to {employee.name}.")
+    except Exception as exc:
+        print("Error creating customer: ", exc)
+
+def update_customer(employee):
+    customers = employee.customers()
+    if not customers:
+        print(f"{employee.name} has no active customers to update.")
+        return
+
+    print("\nSelect a Customer to Update:")
+    print("-" * 40)
+    for idx, customer in enumerate(customers, start=1):
+        print(f"{idx}. {customer.name}, Stock Number: {customer.stock_number}")
+    print("-" * 40)
+
+    choice = input("Enter the number of the customer: ")
+    try:
+        choice = int(choice)
+        if 1 <= choice <= len(customers):
+            customer = customers[choice - 1]
+            new_name = input(f"Enter the customer's new name (current: {customer.name}): ")
+            new_stock_number = input(f"Enter the customer's new stock number (current: {customer.stock_number}): ")
+            customer.name = new_name
+            customer.stock_number = new_stock_number
+            customer.update()
+            print(f"Success: Customer {customer.name} updated.")
+        else:
+            print("Invalid customer number")
+    except ValueError:
+        print("Invalid input. Please enter a number")
+
+def delete_customer(employee):
+    customers = employee.customers()
+    if not customers:
+        print(f"{employee.name} has no active customers to delete.")
+        return
+
+    print("\nSelect a Customer to Delete:")
+    print("-" * 40)
+    for idx, customer in enumerate(customers, start=1):
+        print(f"{idx}. {customer.name}, Stock Number: {customer.stock_number}")
+    print("-" * 40)
+
+    choice = input("Enter the number of the customer: ")
+    try:
+        choice = int(choice)
+        if 1 <= choice <= len(customers):
+            customer = customers[choice - 1]
+            customer.delete()
+            print(f"Success: Customer {customer.name} deleted.")
+        else:
+            print("Invalid customer number")
+    except ValueError:
+        print("Invalid input. Please enter a number")
 
 def create_employee():
     name = input("Enter the employee's name: ")
