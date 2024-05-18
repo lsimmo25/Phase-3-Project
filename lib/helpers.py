@@ -1,131 +1,69 @@
 # lib/helpers.py
+
 from models.employee import Employee
-from models.customer import Customer
 
-def list_all_employee():
+def list_all_employees():
     employees = Employee.get_all()
+    print("\nEmployees:")
+    print("-" * 40)
     for employee in employees:
-        print(employee)
+        print(f"Name: {employee.name}, Title: {employee.title}")
+    print("-" * 40)
 
-def find_employee_by_name():
-    name = input("Enter a employee's name: ")
-    employee = Employee.find_by_name(name)
-    print(employee) if employee else print(f"No employee's found for that name")
-
-def find_employee_by_id():
-    id_ = input("Enter a employee's ID: ")
-    employee = Employee.find_by_id(id_)
-    print(employee) if employee else print(f"Employee ID not found")
-
-def create_employee():
-    name = input("Enter the employee's name: ")
-    title = input("Enter the employee's title: ")
+def select_employee():
+    employees = Employee.get_all()
+    print("\nSelect an Employee:")
+    print("-" * 40)
+    for idx, employee in enumerate(employees, start=1):
+        print(f"{idx}. *{employee.name}*, Title: {employee.title}")
+    print("-" * 40)
+    
+    choice = input("Enter the number of the employee: ")
     try:
-        employee = Employee.create(name, title)
-        print(f"Success: {employee}")
-    except Exception as exc:
-        print("Error creating employee: ", exc)
-
-def update_employee():
-    id_ = input("Enter an employee's ID: ")
-    if employee := Employee.find_by_id(id_):
-        try:
-            name = input("Enter the employees new name: ")
-            employee.name = name
-            title = input("Enter the employee's new title: ")
-            employee.title = title
-            employee.update()
-            print(f"Success: {employee}")
-        except Exception as exc:
-            print(f"Error updating employee: ", exc)
-    else:
-        print(f"Employee {id_} not found")
-
-def delete_employee():
-    id_ = input("Enter an employee's ID: ")
-    if employee := Employee.find_by_id(id_):
-        employee.delete()
-        print(f'Employee {id_} deleted')
-    else:
-        print(f'Employee {id_} not found')
-
-def list_all_customers():
-    customers = Customer.get_all()
-    for customer in customers:
-        print(customer)
-
-def find_customer_by_name():
-    name = input("Enter a Customer's name: ")
-    customer = Customer.find_by_name(name)
-    print(customer) if customer else print(f"No customer's found for that name")
-
-def find_customer_by_id():
-    id_ = input("Enter a customer's ID: ")
-    customer = Customer.find_by_id(id_)
-    print(customer) if customer else print(f"Customer ID not found")
-
-def create_customer():
-    name = input("Enter the customer's name: ")
-    stock_number = input("Enter the customer's stock number: ")
-    try:
-        employee_id = int(input("Enter the employee_id for the employee the customer belongs to:  "))
-    except ValueError:
-        print("Employee ID must be a valid integer.")
-        return
-
-    employee = Employee.find_by_id(employee_id)
-
-    if employee:
-        try:
-            customer = Customer.create(name, stock_number, employee_id)
-            print(f'Success: {customer}')
-        except Exception as exc:
-            print("Error creating customer: ", exc)
-    else:
-        print(f"Employee with ID {employee_id} not found.")
-
-def update_customer():
-    id_ = input("Enter the customer's id: ")
-    if customer := Customer.find_by_id(id_):
-        try:
-            name = input("Enter the customer's new name: ")
-            customer.name = name
-            stock_number = input("Enter the customer's new stock number: ")
-            customer.stock_number = stock_number
-
-            customer.update()
-            print(f'Success: {customer}')
-        except Exception as exc:
-            print("Error updating customer: ", exc)
-    else:
-        print(f'customer {id_} not found')
-
-def delete_customer():
-    id_ = input("Enter the customer's id: ")
-    if customer := Customer.find_by_id(id_):
-        customer.delete()
-        print(f'Customer {id_} deleted')
-    else:
-        print(f'Customer {id_} not found')
-
-def all_customers_belonging_to_an_employee():
-    employee_id = input("Enter the employee's id: ")
-    employee = Employee.find_by_id(employee_id)
-    if employee:
-        customers = employee.customers()
-        if customers:
-            print(f"{employee.name}'s customers:")
-            for customer in customers:
-                print(customer)
+        choice = int(choice)
+        if 1 <= choice <= len(employees):
+            employee = employees[choice - 1]
+            employee_menu(employee)
         else:
-            print(f"{employee.name} has no active customers")
-    else:
-        print(f'Employee with ID {employee_id} not found')
+            print("Invalid employee number")
+    except ValueError:
+        print("Invalid input. Please enter a number")
 
-def find_employee_by_name():
-    name = input("Enter a title: ")
-    employee = Employee.find_by_name(name)
-    print(employee) if employee else print(f"No employee's found for that name")
+def employee_menu(employee):
+    while True:
+        print(f"\nEmployee: *{employee.name}*")
+        print("-" * 40)
+        print("Employee Menu:")
+        print("0. Back to Main Menu")
+        print("1. View Employee Details")
+        print("2. View Employee's Customers")
+        choice = input("> ")
+        if choice == "0":
+            break
+        elif choice == "1":
+            view_employee_details(employee)
+        elif choice == "2":
+            view_employee_customers(employee)
+        else:
+            print("Invalid choice")
+
+def view_employee_details(employee):
+    print("\nEmployee Details:")
+    print("-" * 40)
+    print(f"Name: {employee.name}")
+    print(f"Title: {employee.title}")
+    print("-" * 40)
+
+def view_employee_customers(employee):
+    customers = employee.customers()
+    if customers:
+        print(f"\nCustomers of {employee.name}:")
+        print("-" * 40)
+        for customer in customers:
+            print(f"Name: {customer.name}, Stock Number: {customer.stock_number}")
+        print("-" * 40)
+    else:
+        print(f"{employee.name} has no active customers")
 
 
 def exit_program():

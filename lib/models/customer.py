@@ -10,12 +10,6 @@ class Customer:
         self.stock_number = stock_number
         self.employee_id = employee_id
 
-    def __repr__(self) -> str:
-        return (
-        f"<Customer {self.id}: {self.name}, {self.stock_number} --"
-        f" Employee ID: {self.employee_id}>"
-        )
-    
     @property
     def name(self):
         return self._name

@@ -11,9 +11,6 @@ class Employee:
         self.id = id
         self.title = title
     
-    def __repr__(self):
-        return f"<Employee {self.id}: {self.name}, {self.title}"
-    
     @property
     def name(self):
         return self._name
@@ -135,6 +132,17 @@ class Employee:
         """
 
         row = CURSOR.execute(sql, (name,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+    
+    @classmethod
+    def find_by_name(cls, title: str):
+        sql = """
+            SELECT *
+            FROM employees
+            WHERE title is ?
+        """
+
+        row = CURSOR.execute(sql, (title,)).fetchone()
         return cls.instance_from_db(row) if row else None
     
     def customers(self):
