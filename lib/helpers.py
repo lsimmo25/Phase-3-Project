@@ -150,20 +150,7 @@ def create_employee():
     except Exception as exc:
         print("Error creating employee: ", exc)
 
-def update_employee(employee=None):
-    if not employee:
-        try:
-            id_ = int(input("Enter the employee's ID: "))
-        except ValueError:
-            print("Employee ID must be a valid integer.")
-            return
-
-        if employee := Employee.find_by_id(id_):
-            pass
-        else:
-            print(f"Employee with ID {id_} not found.")
-            return
-
+def update_employee(employee):
     try:
         new_name = input(f"Enter the employee's new name (current: {employee.name}): ")
         new_title = input(f"Enter the employee's new title (current: {employee.title}): ")
@@ -172,20 +159,8 @@ def update_employee(employee=None):
     except Exception as exc:
         print("Error updating employee: ", exc)
 
-def delete_employee(employee=None):
-    if not employee:
-        try:
-            id_ = int(input("Enter the employee's ID: "))
-        except ValueError:
-            print("Employee ID must be a valid integer.")
-            return
-
-        if employee := Employee.find_by_id(id_):
-            pass
-        else:
-            print(f"Employee with ID {id_} not found.")
-            return
-
+def delete_employee(employee):
+    #Iterate through the employees customers and delete one at a time first if any.
     employee.delete()
     print(f'Employee {employee.name} deleted')
 
