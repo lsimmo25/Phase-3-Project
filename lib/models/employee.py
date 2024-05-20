@@ -116,16 +116,6 @@ class Employee:
         return [cls.instance_from_db(row) for row in rows]
     
     @classmethod
-    def find_by_id(cls, id: int):
-        sql = """
-            SELECT *
-            FROM employees
-            WHERE id = ?
-        """
-        row = CURSOR.execute(sql, (id,)).fetchone()
-        return cls.instance_from_db(row) if row else None
-    
-    @classmethod
     def find_by_name(cls, name: str):
         sql = """
             SELECT *
