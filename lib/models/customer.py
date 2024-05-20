@@ -1,6 +1,7 @@
 from models.__init__ import CURSOR, CONN
 
 class Customer:
+    
     all = {}
 
     def __init__(self, name, stock_number, employee_id, id=None):

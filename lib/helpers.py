@@ -160,7 +160,12 @@ def update_employee(employee):
         print("Error updating employee: ", exc)
 
 def delete_employee(employee):
-    #Iterate through the employees customers and delete one at a time first if any.
+    customers = employee.customers()
+
+    if customers:
+        for customer in customers:
+            customer.delete()
+
     employee.delete()
     print(f'Employee {employee.name} deleted')
 
