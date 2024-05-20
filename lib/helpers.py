@@ -74,8 +74,8 @@ def view_employee_customers(employee):
     if customers:
         print(f"\nCustomers of {employee.name}:")
         print("-" * 40)
-        for customer in customers:
-            print(f"Name: {customer.name}, Stock Number: {customer.stock_number}")
+        for idx, customer in enumerate(customers, start=1):
+            print(f"{idx}. Name: {customer.name}, Stock Number: {customer.stock_number}")
         print("-" * 40)
     else:
         print(f"{employee.name} has no active customers")
