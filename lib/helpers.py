@@ -5,8 +5,8 @@ def list_all_employees():
     employees = Employee.get_all()
     print("\nEmployees:")
     print("-" * 40)
-    for employee in employees:
-        print(f"Name: {employee.name}, Title: {employee.title}")
+    for idx, employee in enumerate(employees, start=1):
+        print(f"{idx}. Name: {employee.name}, Title: {employee.title}")
     print("-" * 40)
 
 def select_employee():
