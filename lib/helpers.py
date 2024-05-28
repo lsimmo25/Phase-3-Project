@@ -54,7 +54,7 @@ def employee_menu(employee):
             update_employee(employee)
         elif choice == "5":
             delete_employee(employee)
-            break  # Return to main menu after deleting employee
+            break
         elif choice == "6":
             update_customer(employee)
         elif choice == "7":
@@ -83,11 +83,9 @@ def view_employee_customers(employee):
 def create_customer(employee):
     name = input("Enter the customer's name: ")
     stock_number = input("Enter the customer's stock number: ")
-    try:
-        customer = Customer.create(name, stock_number, employee.id)
-        print(f"Success: Customer {customer.name} created and assigned to {employee.name}.")
-    except Exception as exc:
-        print("Error creating customer: ", exc)
+    customer = Customer.create(name, stock_number, employee.id)
+    print(f"Success: Customer {customer.name} created and assigned to {employee.name}.")
+
 
 def update_customer(employee):
     customers = employee.customers()
@@ -144,20 +142,14 @@ def delete_customer(employee):
 def create_employee():
     name = input("Enter the employee's name: ")
     title = input("Enter the employee's title: ")
-    try:
-        employee = Employee.create(name, title)
-        print(f"Success: Employee {employee.name} created.")
-    except Exception as exc:
-        print("Error creating employee: ", exc)
+    employee = Employee.create(name, title)
+    print(f"Success: Employee {employee.name} created.")
 
 def update_employee(employee):
-    try:
-        new_name = input(f"Enter the employee's new name (current: {employee.name}): ")
-        new_title = input(f"Enter the employee's new title (current: {employee.title}): ")
-        employee.update(new_name, new_title)
-        print(f"Success: Employee {employee.name} updated.")
-    except Exception as exc:
-        print("Error updating employee: ", exc)
+    new_name = input(f"Enter the employee's new name (current: {employee.name}): ")
+    new_title = input(f"Enter the employee's new title (current: {employee.title}): ")
+    employee.update(new_name, new_title)
+    print(f"Success: Employee {employee.name} updated.")
 
 def delete_employee(employee):
     customers = employee.customers()

@@ -41,7 +41,7 @@ class Employee:
             id INTEGER PRIMARY KEY,
             name TEXT,
             title TEXT
-            )    
+            )
         """
         CURSOR.execute(sql)
         CONN.commit()
